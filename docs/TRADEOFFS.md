@@ -17,3 +17,6 @@
 - Add model/prompt registry with canary releases and rollback.
 - Add distributed tracing with OpenTelemetry.
 - Expand evaluations to cover adversarial prompts, tool failures, stale evidence, dependency changes, and partial execution.
+
+## Prototype Limitations
+- Tenant isolation is represented conceptually but not implemented as a full tenant identity/authentication layer in the local prototype. The current tool scope enforces environment boundaries (`staging`/`prod`). A production deployment would propagate authenticated tenant identity through every tool request and enforce tenant-level authorization server-side.
