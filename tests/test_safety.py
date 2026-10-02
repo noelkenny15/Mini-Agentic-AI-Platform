@@ -61,25 +61,7 @@ def test_verifier_rejects_wrong_service():
 
     assert result.approved is False
     assert "Action scope does not match incident scope" in result.reasons
-def test_rejected_workflow_never_executes_ops(tmp_path, monkeypatch):
-    wf = IncidentWorkflow(str(tmp_path / "trace.db"))
 
-    def forbidden_execute(*args, **kwargs):
-        raise AssertionError("Ops execution must not occur after verifier rejection")
-
-    monkeypatch.setattr(wf.ops, "run", forbidden_execute)
-
-    incident = Incident(
-        incident_id="T3",
-        description="payment timeout inventory-service",
-        service="payment-service",
-        env="prod",
-        version="v1.4",
-    )
-
-    result = wf.run(incident)
-
-    assert result["state"] == "REJECTED"
 def test_rejected_workflow_never_executes_ops(tmp_path, monkeypatch):
     wf = IncidentWorkflow(str(tmp_path / "trace.db"))
 
